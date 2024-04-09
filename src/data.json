@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "question": "Do penguins have feathers?",
+    "answer": "Yes"
+  },
+  {
+    "id": 2,
+    "question": "Can ostriches fly?",
+    "answer": "No"
+  },
+  {
+    "id": 3,
+    "question": "Are dolphins considered mammals?",
+    "answer": "Yes"
+  },
+  {
+    "id": 4,
+    "question": "Do all spiders have eight legs?",
+    "answer": "Yes"
+  },
+  {
+    "id": 5,
+    "question": "Can cheetahs climb trees?",
+    "answer": "No"
+  }
+]
