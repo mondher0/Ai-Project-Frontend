@@ -24,21 +24,32 @@ git clone https://github.com/your-username/your-project-name.git
 ```
 
 Navigate to the project directory:
+
+```bash
 cd your-project-name
+```
 
 Install the required dependencies:
+
+```bash
 npm install
+```
 
 To run the development server:
+
+```bash
 npm run dev
+```
 
 Open http://localhost:3000 with your browser to see the result.
 
 ### Usage
+
 - Access the application in your web browser by visiting http://localhost:3000 or the deployed URL if available
 - Answer the yes/no questions presented by the application about the characteristics of the animal you have in mind.
 - Based on your responses, the application will deduce the most probable animal and provide you with the result.
 - If desired, explore the explanation provided by the system to understand how the deduction was made.
 
 ### Authors
+
 Mondher Mameri
