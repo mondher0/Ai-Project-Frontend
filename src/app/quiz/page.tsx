@@ -1,6 +1,5 @@
 import getQuestions from "@/lib/api/quiz";
 import QuestionCard from "@/lib/components/question-card";
-import QuizCard from "@/lib/components/quiz-card";
 import { Question } from "@/lib/types";
 
 export default async function QuizPage() {

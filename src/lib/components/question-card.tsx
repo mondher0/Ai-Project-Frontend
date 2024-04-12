@@ -12,14 +12,12 @@ export default function QuestionCard({ question }: QuestionProps) {
   const [loading, setLoading] = useState(false);
 
   const handleAnswer = async (answer: Answer) => {
-    console.log(answer);
     setLoading(true);
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}animal_classification/faq/`,
         answer,
       );
-      console.log(response);
       const data: Question = response.data;
       setCurrentQuestion(data);
       setLoading(false);
@@ -34,7 +32,6 @@ export default function QuestionCard({ question }: QuestionProps) {
         setShowResult(true);
         console.log(response.data);
         setResults(response.data);
-        console.log(response);
       }
     } catch (error) {
       console.log(error);
