@@ -1,3 +1,4 @@
+"use client";
 import { ResultsProps } from "../types";
 
 const QuizResult = ({ results }: ResultsProps) => {
@@ -19,6 +20,12 @@ const QuizResult = ({ results }: ResultsProps) => {
       <p className="text-3xl font-bold underline decoration-pink-500 text-gray-800">
         {formatResults()}
       </p>
+      <button
+        onClick={() => window.location.reload()}
+        className="mt-4 bg-green-400 hover:bg-green-500 text-white font-bold py-2 md:py-3 px-4 md:px-6 rounded-lg focus:outline-none focus:shadow-outline transition duration-150 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+      >
+        Reset
+      </button>
     </div>
   );
 };
