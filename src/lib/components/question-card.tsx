@@ -3,30 +3,34 @@ import { useState, useEffect } from "react";
 import { Answer, Question, QuestionProps } from "../types";
 import QuizResult from "./quiz-result";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
-export default function QuizCard({ questions }: QuestionProps) {
+export default function QuestionCard({ questions }: QuestionProps) {
   const router = useRouter();
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [currentQuestion, setCurrentQuestion] = useState<Question>(
-    questions,
-  );
+  const [currentQuestion, setCurrentQuestion] = useState<Question>(questions);
   const [showResult, setShowResult] = useState(false);
-  const [answers, setAnswers] = useState<Answer[]>([]);
 
   useEffect(() => {
     setCurrentQuestion(questions);
-  }, [currentQuestionIndex, questions]);
+  }, [currentQuestion, questions]);
 
-  const handleAnswer = (answer: Answer) => {
+  const handleAnswer = async (answer: Answer) => {
     console.log(answer);
-    router.push(
-      `/quiz?answer=${answer.answer}&id=${questions.id}`,
-    );
-    setAnswers([...answers, answer]);
-    console.log(answers);
-
-      setShowResult(true);
-              
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}animal_classification/faq/`,
+      );
+      console.log(response);
+      let showResult = true;
+      if (showResult) {
+        const response = await axios(
+          `${process.env.NEXT_PUBLIC_BASE_URL}animal_classification/result/`,
+        );
+        console.log(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const renderQuestion = () => (

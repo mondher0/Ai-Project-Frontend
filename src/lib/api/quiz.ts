@@ -1,9 +1,12 @@
 import data from "../../data.json";
 import { Question } from "../types";
-const getQuestions = (url: string): Question[] => {
-  //const response = await fetch(url);
-  const questionData: Question[] = data;
-  return questionData;
+const getQuestions = async (): Promise<Question> => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}animal_classification/faq/`,
+  );
+  const data = await response.json();
+
+  return data;
 };
 
 export default getQuestions;

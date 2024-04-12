@@ -2,12 +2,12 @@
 export type Question = {
   id: number;
   question: string;
-  answer: string;
+  status?: string;
 };
 
 // question props
 export interface QuestionProps {
-  questions: Question[];
+  questions: Question;
 }
 
 // answer type
@@ -16,3 +16,10 @@ export type Answer = {
   answer: string;
 };
 
+// search params type
+export interface SearchParams {
+  searchParams: {
+    answer: string;
+    id: number;
+  };
+}
