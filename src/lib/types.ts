@@ -7,7 +7,7 @@ export type Question = {
 
 // question props
 export interface QuestionProps {
-  questions: Question;
+  question: Question;
 }
 
 // answer type
@@ -16,10 +16,12 @@ export type Answer = {
   answer: string;
 };
 
-// search params type
-export interface SearchParams {
-  searchParams: {
-    answer: string;
-    id: number;
-  };
+// results type
+export type Results = {
+  data: string[];
+};
+
+// results props
+export interface ResultsProps {
+  results: Results;
 }

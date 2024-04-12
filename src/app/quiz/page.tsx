@@ -1,15 +1,14 @@
 import getQuestions from "@/lib/api/quiz";
 import QuestionCard from "@/lib/components/question-card";
 import QuizCard from "@/lib/components/quiz-card";
-import { Question, SearchParams } from "@/lib/types";
+import { Question } from "@/lib/types";
 
-export default async function QuizPage({ searchParams }: SearchParams) {
+export default async function QuizPage() {
   const QuizData: Promise<Question> = getQuestions();
   const question = await QuizData;
 
-  return <QuestionCard questions={question}/>;
-
-  }
+  return <QuestionCard question={question} />;
+}
 
 // import getQuestions from "@/lib/api/quiz";
 // import QuestionCard from "@/lib/components/question-card";

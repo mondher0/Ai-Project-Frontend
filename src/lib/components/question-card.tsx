@@ -1,31 +1,39 @@
 "use client";
-import { useState, useEffect } from "react";
-import { Answer, Question, QuestionProps } from "../types";
+import { useState } from "react";
+import { Answer, Question, QuestionProps, Results } from "../types";
 import QuizResult from "./quiz-result";
-import { useRouter } from "next/navigation";
 import axios from "axios";
+import Skeleton from "react-loading-skeleton";
 
-export default function QuestionCard({ questions }: QuestionProps) {
-  const router = useRouter();
-  const [currentQuestion, setCurrentQuestion] = useState<Question>(questions);
+export default function QuestionCard({ question }: QuestionProps) {
+  const [currentQuestion, setCurrentQuestion] = useState<Question>(question);
   const [showResult, setShowResult] = useState(false);
-
-  useEffect(() => {
-    setCurrentQuestion(questions);
-  }, [currentQuestion, questions]);
+  const [results, setResults] = useState<Results>({ data: [] });
+  const [loading, setLoading] = useState(false);
 
   const handleAnswer = async (answer: Answer) => {
     console.log(answer);
+    setLoading(true);
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}animal_classification/faq/`,
+        answer,
       );
       console.log(response);
-      let showResult = true;
-      if (showResult) {
+      const data: Question = response.data;
+      setCurrentQuestion(data);
+      setLoading(false);
+      if (data.status === "end") {
+        setCurrentQuestion({
+          id: 0,
+          question: "Wait for the result...",
+        });
         const response = await axios(
           `${process.env.NEXT_PUBLIC_BASE_URL}animal_classification/result/`,
         );
+        setShowResult(true);
+        console.log(response.data);
+        setResults(response.data);
         console.log(response);
       }
     } catch (error) {
@@ -36,21 +44,25 @@ export default function QuestionCard({ questions }: QuestionProps) {
   const renderQuestion = () => (
     <>
       <div className="bg-gradient-to-r from-green-100 to-blue-100 bg-opacity-90 p-4 md:p-6 rounded-lg mb-4 md:mb-6 shadow-inner overflow-auto max-h-60">
-        <p className="text-gray-800 text-base md:text-lg font-medium text-center">
-          {currentQuestion.question}
-        </p>
+        {loading ? (
+          <Skeleton />
+        ) : (
+          <p className="text-gray-800 text-base md:text-lg font-medium text-center">
+            {currentQuestion.question}
+          </p>
+        )}
       </div>
       <div className="flex justify-around mt-2 md:mt-4">
         <button
           onClick={() =>
-            handleAnswer({ id: currentQuestion.id, answer: "Yes" })
+            handleAnswer({ id: currentQuestion.id, answer: "yes" })
           }
           className="bg-green-400 hover:bg-green-500 text-white font-bold py-2 md:py-3 px-4 md:px-6 rounded-lg focus:outline-none focus:shadow-outline transition duration-150 ease-in-out transform hover:-translate-y-1 hover:scale-110"
         >
           Yes
         </button>
         <button
-          onClick={() => handleAnswer({ id: currentQuestion.id, answer: "No" })}
+          onClick={() => handleAnswer({ id: currentQuestion.id, answer: "no" })}
           className="bg-red-400 hover:bg-red-500 text-white font-bold py-2 md:py-3 px-4 md:px-6 rounded-lg focus:outline-none focus:shadow-outline transition duration-150 ease-in-out transform hover:-translate-y-1 hover:scale-110"
         >
           No
@@ -77,7 +89,7 @@ export default function QuestionCard({ questions }: QuestionProps) {
           <h2 className="text-2xl font-bold">AI Expert System for Animals</h2>
         </div>
         <div className="p-6">
-          {!showResult ? renderQuestion() : <QuizResult />}
+          {!showResult ? renderQuestion() : <QuizResult results={results} />}
         </div>
       </div>
     </div>
